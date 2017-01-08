@@ -133,8 +133,11 @@ class CmdParser {
 
 
 const int max_len = 255;
+
 char recieved_data[max_len];
+
 unsigned int* data = new unsigned int[max_len];
+
 CmdParser parser(255, '|', '_', ':');
 
 /*
@@ -159,18 +162,18 @@ void loop() {
      showMem("after recieve");
 
      parser.parse(recieved_data);
-     showMem("after parse", true);
+     showMem("after parse");
 
-//     int data_count = parser.count();
-//     data = parser.data();
-//     showMem("after assigning");
-//
-//     Serial.print("data["); Serial.print(data_count); Serial.print("]: ");
-//     for (int i=0; i<data_count; i++) {
-//        Serial.print(data[i]);
-//        Serial.print(",");
-//     } Serial.println("");
-//     showMem("after printing",true);
+     int data_count = parser.count();
+     data = parser.data();
+     showMem("after assigning");
+
+     Serial.print("data["); Serial.print(data_count); Serial.print("]: ");
+     for (int i=0; i<data_count; i++) {
+        Serial.print(data[i]);
+        Serial.print(",");
+     } Serial.println("");
+     showMem("after printing",true);
 
 //     delete data; // и с этим, и без этого УТЕКАЕТ ПАМЯТЬ!
 //     showMem("after deleting *data",true);
