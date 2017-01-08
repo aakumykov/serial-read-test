@@ -41,6 +41,7 @@ class CmdParser {
       return this->count();
     }
     unsigned int* data() {
+      this->clear();
       return this->_data;
     }
     void clear() {
@@ -133,8 +134,8 @@ class CmdParser {
 
 const int max_len = 255;
 char recieved_data[max_len];
-int counter = 0;
-CmdParser parser(128, '|', '_', ':');
+unsigned int* data = new unsigned int[max_len];
+CmdParser parser(255, '|', '_', ':');
 
 /*
 123|1_2_3_4_5_6_7_8_9_0;
@@ -154,24 +155,23 @@ void loop() {
      int recieved_len = Serial.readBytesUntil(';',recieved_data,max_len);
      Serial.print("recieved_len: "); Serial.println(recieved_len);
      Serial.print("recieved data: "); Serial.println(recieved_data);
-     showMem("after recieve",true);
+     showMem("after recieve");
 
      parser.parse(recieved_data);
-     showMem("after parse",true);
+     showMem("after parse");
 
      int data_count = parser.count();
-     unsigned int* data = new unsigned int[data_count];
      data = parser.data();
-     showMem("after assigning",true);
+     showMem("after assigning");
 
-//     Serial.print("data["); Serial.print(data_count); Serial.print("]: ");
-//     for (int i=0; i<data_count; i++) {
-//        Serial.print(data[i]);
-//        Serial.print(",");
-//     } Serial.println("");
-//     showMem("after printing",true);
+     Serial.print("data["); Serial.print(data_count); Serial.print("]: ");
+     for (int i=0; i<data_count; i++) {
+        Serial.print(data[i]);
+        Serial.print(",");
+     } Serial.println("");
+     showMem("after printing",true);
 
 //     delete data; // и с этим, и без этого УТЕКАЕТ ПАМЯТЬ!
-     showMem("after deleting *data",true);
+//     showMem("after deleting *data",true);
   }
 }
