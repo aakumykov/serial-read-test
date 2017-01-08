@@ -152,24 +152,25 @@ void loop() {
   
   if (Serial.available() > 0) {
   
-     int recieved_len = Serial.readBytesUntil(';',recieved_data,max_len);
-     Serial.print("recieved_len: "); Serial.println(recieved_len);
-     Serial.print("recieved data: "); Serial.println(recieved_data);
+     int recieved_len = Serial.readBytesUntil(';', recieved_data, max_len);
+      recieved_data[recieved_len] = char(0);
+     Serial.print("recieved: "); Serial.println(recieved_data);
+     Serial.print("len: "); Serial.println(recieved_len);
      showMem("after recieve");
 
      parser.parse(recieved_data);
-     showMem("after parse");
+     showMem("after parse", true);
 
-     int data_count = parser.count();
-     data = parser.data();
-     showMem("after assigning");
-
-     Serial.print("data["); Serial.print(data_count); Serial.print("]: ");
-     for (int i=0; i<data_count; i++) {
-        Serial.print(data[i]);
-        Serial.print(",");
-     } Serial.println("");
-     showMem("after printing",true);
+//     int data_count = parser.count();
+//     data = parser.data();
+//     showMem("after assigning");
+//
+//     Serial.print("data["); Serial.print(data_count); Serial.print("]: ");
+//     for (int i=0; i<data_count; i++) {
+//        Serial.print(data[i]);
+//        Serial.print(",");
+//     } Serial.println("");
+//     showMem("after printing",true);
 
 //     delete data; // и с этим, и без этого УТЕКАЕТ ПАМЯТЬ!
 //     showMem("after deleting *data",true);
